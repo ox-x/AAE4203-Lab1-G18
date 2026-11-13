@@ -8,10 +8,12 @@ from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK
 from docx.oxml import OxmlElement
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 OUT = 'report/AAE4203_Lab1_GNSS_Report_G18.docx'
+REPO = 'https://github.com/ox-x/AAE4203-Lab1-G18'
 FIG = 'fig/'
 
 st = json.load(open('out/stats.json'))
@@ -186,6 +188,32 @@ def footer_page_numbers(doc):
         r.font.size = Pt(8)
 
 
+def add_hyperlink(paragraph, url, text, size=10.5, color='1F3B57'):
+    """Insert a clickable external hyperlink into an existing paragraph."""
+    part = paragraph.part
+    r_id = part.relate_to(url, RT.HYPERLINK, is_external=True)
+    link = OxmlElement('w:hyperlink')
+    link.set(qn('r:id'), r_id)
+    run = OxmlElement('w:r')
+    rPr = OxmlElement('w:rPr')
+    c = OxmlElement('w:color')
+    c.set(qn('w:val'), color)
+    rPr.append(c)
+    u = OxmlElement('w:u')
+    u.set(qn('w:val'), 'single')
+    rPr.append(u)
+    sz = OxmlElement('w:sz')
+    sz.set(qn('w:val'), str(int(size * 2)))
+    rPr.append(sz)
+    run.append(rPr)
+    t = OxmlElement('w:t')
+    t.text = text
+    run.append(t)
+    link.append(run)
+    paragraph._p.append(link)
+    return link
+
+
 # ============================================================== document ====
 doc = Document()
 setup(doc)
@@ -244,6 +272,15 @@ cover_row('Department:  ', 'Department of Aeronautical and Aviation Engineering'
 cover_row('School:  ', 'The Hong Kong Polytechnic University')
 cover_row('Field session:  ', '30 October 2026, 17:00–17:10 HKT, next to Block X')
 cover_row('Date:  ', '12 November 2026')
+
+p = doc.add_paragraph()
+p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+p.paragraph_format.space_before = Pt(8)
+p.paragraph_format.space_after = Pt(1)
+r = p.add_run('Code and data:  ')
+r.font.size = Pt(10.5)
+r.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
+add_hyperlink(p, REPO, REPO.replace('https://', ''))
 
 H(doc, 'Abstract')
 P(doc, 'On 30 October 2026 our group logged 580 epochs (9 min 56 s at 1 Hz) of raw u-blox ZED-F9P '
@@ -579,7 +616,7 @@ P(doc, 'The submitted files are G18_benchmark.csv (1531 epochs, 99.8 % availabil
 
 P(doc, 'The documented code (gnss.py, spp.py, run_all.py, plots.py), the two raw logs, the converted RINEX '
        'files and a README that reproduces both CSV files are in the group repository '
-       'https://github.com/ox-x/AAE4203-Lab1-G18.')
+       + REPO + '.')
 
 H(doc, '6  AI-Use Statement')
 P(doc, 'A generative AI assistant (WorkBuddy, running a DeepSeek-class model) was used for three purposes: '
