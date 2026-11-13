@@ -1,0 +1,48 @@
+==============================================================================
+OWN DATA
+==============================================================================
+epochs 580  464427-465023 s (week 2442)  duration 596 s
+receiver solutions 580
+v1 GPS only, unweighted         n=575 sats=  5.4 HDOP=2.47 resid= 7.65 scatter E/N/U=  34.2/  25.9/  79.1 2D=  42.9 | vs RX dE/dN/dU=  -4.1/   0.5/  23.7 2D=  41.5 (n=575)
+v2 + Galileo                    n=580 sats= 11.9 HDOP=1.12 resid=10.32 scatter E/N/U=  27.2/  14.2/  57.0 2D=  30.7 | vs RX dE/dN/dU=  -2.7/   0.0/  28.1 2D=  29.9 (n=580)
+v3 + BeiDou                     n=580 sats= 18.7 HDOP=0.82 resid=10.26 scatter E/N/U=  20.9/  12.0/  30.9 2D=  24.1 | vs RX dE/dN/dU=  -4.8/  -0.2/  19.0 2D=  18.6 (n=580)
+v4 + elevation weighting        n=580 sats= 18.7 HDOP=0.82 resid=11.23 scatter E/N/U=  19.7/  12.0/  32.9 2D=  23.0 | vs RX dE/dN/dU=  -1.6/  -0.7/  23.0 2D=  16.9 (n=580)
+v5 + C/N0 weighting             n=580 sats= 18.7 HDOP=0.82 resid=13.95 scatter E/N/U=  17.2/  11.2/  13.8 2D=  20.5 | vs RX dE/dN/dU=  -2.9/   0.4/   9.6 2D=   7.7 (n=580)
+v6 + residual outlier rejection n=580 sats= 18.1 HDOP=0.85 resid= 9.81 scatter E/N/U=  17.1/  11.8/  13.9 2D=  20.8 | vs RX dE/dN/dU=  -2.0/   0.1/   7.1 2D=   7.0 (n=580)
+v7 + C/N0 mask 25 dB-Hz         n=577 sats= 16.3 HDOP=1.04 resid= 6.39 scatter E/N/U=  17.8/  11.8/  13.2 2D=  21.3 | vs RX dE/dN/dU=  -1.9/   0.2/   5.7 2D=   7.0 (n=577)
+wrote out/G18_owndata.csv
+raw: epochs 580  mean sats {'G': 7.06, 'E': 7.59, 'C': 6.84, 'R': 5.14}  median C/N0 {'G': 33.0, 'E': 33.0, 'C': 36.0, 'R': 32.0}  low-C/N0 frac 0.315
+
+==============================================================================
+EXAMPLE DATASET (regression test, 186 epochs, 2025)
+==============================================================================
+example epochs 186  reference mean ECEF [-2418219.17  5385742.31  2405771.31]
+v1 GPS only, unweighted         n=113 2D RMSE= 25.57 3D RMSE= 80.72 P95 2D= 43.02 biasE/N/U= -20.4/  -5.1/  48.9
+v2 + Galileo                    n=159 2D RMSE= 16.97 3D RMSE= 34.79 P95 2D= 28.73 biasE/N/U=  -9.7/  -1.0/  24.1
+v3 + BeiDou                     n=186 2D RMSE= 15.49 3D RMSE= 27.95 P95 2D= 25.71 biasE/N/U=  -5.9/  -0.6/  20.7
+v4 + elevation weighting        n=186 2D RMSE= 15.31 3D RMSE= 25.99 P95 2D= 25.47 biasE/N/U=  -4.8/  -0.9/  19.4
+v5 + C/N0 weighting             n=186 2D RMSE= 16.12 3D RMSE= 23.57 P95 2D= 27.54 biasE/N/U=  -4.5/  -0.8/  16.3
+v6 + residual outlier rejection n=186 2D RMSE= 16.13 3D RMSE= 23.52 P95 2D= 27.55 biasE/N/U=  -4.5/  -0.7/  16.2
+v7 + C/N0 mask 25 dB-Hz         n=186 2D RMSE= 16.14 3D RMSE= 23.51 P95 2D= 27.60 biasE/N/U=  -4.5/  -0.7/  16.1
+
+==============================================================================
+BENCHMARK (UrbanNav-HK-Deep-Urban-1, 1534 epochs)
+==============================================================================
+benchmark epochs 1534  week 2158  tow 455346-456879
+v1 GPS only, unweighted         avail= 96.1% (1474/1534) sats=  5.7 HDOP= 2.79 resid=  8.02
+v2 + Galileo                    avail= 99.6% (1528/1534) sats=  9.3 HDOP= 1.98 resid=  8.37
+v3 + BeiDou                     avail= 99.8% (1531/1534) sats= 15.9 HDOP= 1.23 resid=  9.54
+v4 + elevation weighting        avail= 99.8% (1531/1534) sats= 15.9 HDOP= 1.23 resid= 10.90
+v5 + C/N0 weighting             avail= 99.8% (1531/1534) sats= 15.9 HDOP= 1.23 resid= 14.41
+v6 + residual outlier rejection avail= 99.8% (1531/1534) sats= 15.6 HDOP= 1.25 resid= 12.31
+wrote out/G18_benchmark.csv
+v7 + C/N0 mask 25 dB-Hz         avail= 99.3% (1523/1534) sats= 13.1 HDOP= 1.88 resid=  3.85
+    v1: RMS 2D deviation from v6 =    33.5 m (n=1472), median epoch-to-epoch step =  4.75 m
+    v2: RMS 2D deviation from v6 =    23.3 m (n=1528), median epoch-to-epoch step =  4.68 m
+    v3: RMS 2D deviation from v6 =    18.2 m (n=1531), median epoch-to-epoch step =  4.61 m
+    v4: RMS 2D deviation from v6 =    12.8 m (n=1531), median epoch-to-epoch step =  4.33 m
+    v5: RMS 2D deviation from v6 =     4.7 m (n=1531), median epoch-to-epoch step =  4.05 m
+    v6: RMS 2D deviation from v6 =     0.0 m (n=1531), median epoch-to-epoch step =  4.12 m
+    v7: RMS 2D deviation from v6 =     5.3 m (n=1523), median epoch-to-epoch step =  4.22 m
+
+saved out/stats.json

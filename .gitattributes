@@ -1,0 +1,10 @@
+# keep measurement files byte-exact: no line-ending conversion
+*.obs -text
+*.nav -text
+*.csv -text
+*.pos -text
+*.ubx binary
+*.pdf binary
+*.docx binary
+
+* text=auto eol=lf
